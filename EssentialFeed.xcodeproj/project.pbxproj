@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		AFC796BF2683B6CA00AEFBBA /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFC796B52683B6CA00AEFBBA /* EssentialFeed.framework */; };
 		AFC796C42683B6CA00AEFBBA /* EssentialFeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC796C32683B6CA00AEFBBA /* EssentialFeedTests.swift */; };
-		AFC796C62683B6CA00AEFBBA /* EssentialFeed.h in Headers */ = {isa = PBXBuildFile; fileRef = AFC796B82683B6CA00AEFBBA /* EssentialFeed.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AFC796D02683B72800AEFBBA /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC796CF2683B72800AEFBBA /* FeedItem.swift */; };
 		AFC796D22683BB2700AEFBBA /* FeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC796D12683BB2700AEFBBA /* FeedLoader.swift */; };
 		AFD247EF2686772900101DD8 /* RemoteFeedLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD247EE2686772900101DD8 /* RemoteFeedLoaderTests.swift */; };
@@ -28,7 +27,6 @@
 
 /* Begin PBXFileReference section */
 		AFC796B52683B6CA00AEFBBA /* EssentialFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EssentialFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AFC796B82683B6CA00AEFBBA /* EssentialFeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EssentialFeed.h; sourceTree = "<group>"; };
 		AFC796B92683B6CA00AEFBBA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AFC796BE2683B6CA00AEFBBA /* EssentialFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AFC796C32683B6CA00AEFBBA /* EssentialFeedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssentialFeedTests.swift; sourceTree = "<group>"; };
@@ -79,7 +77,6 @@
 		AFC796B72683B6CA00AEFBBA /* EssentialFeed */ = {
 			isa = PBXGroup;
 			children = (
-				AFC796B82683B6CA00AEFBBA /* EssentialFeed.h */,
 				AFC796B92683B6CA00AEFBBA /* Info.plist */,
 				AFC796D62685247500AEFBBA /* Feed Feature */,
 				AFD247F326888EB100101DD8 /* Feed API */,
@@ -121,7 +118,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AFC796C62683B6CA00AEFBBA /* EssentialFeed.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
