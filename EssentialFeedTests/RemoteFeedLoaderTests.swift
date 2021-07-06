@@ -42,7 +42,7 @@ class RemoteFeedLoaderTests: XCTestCase {
 
         let (sut, client) = makeSUT()
 
-        expect(sut, toCompleteWithError: .connectivity) {
+        expect(sut, toCompleteWith: .failure(.connectivity)) {
             let clientError = NSError(domain: "Test", code: 0)
             client.complete(with: clientError)
         }
@@ -54,7 +54,7 @@ class RemoteFeedLoaderTests: XCTestCase {
 
         let samples = [199, 201, 300, 400, 500]
         samples.enumerated().forEach { index, code in
-            expect(sut, toCompleteWithError: .invalidData) {
+            expect(sut, toCompleteWith: .failure(.invalidData)) {
                 client.complete(withStatusCode: code, at: index)
             }
         }
@@ -64,7 +64,7 @@ class RemoteFeedLoaderTests: XCTestCase {
 
         let (sut, client) = makeSUT()
 
-        expect(sut, toCompleteWithError: .invalidData) {
+        expect(sut, toCompleteWith: .failure(.invalidData)) {
             let invalidJSON = Data.init()
             client.complete(withStatusCode: 200, data: invalidJSON)
         }
@@ -74,13 +74,10 @@ class RemoteFeedLoaderTests: XCTestCase {
 
         let (sut, client) = makeSUT()
 
-        var capturedResult = [RemoteFeedLoader.Result]()
-        sut.load { capturedResult.append($0) }
-
-        let emptyListJson = Data(bytes: "{\"items\": []}".utf8)
-        client.complete(withStatusCode: 200, data: emptyListJson)
-
-        XCTAssertEqual(capturedResult, [.success([])])
+        expect(sut, toCompleteWith: .success([])) {
+            let emptyListJson = Data(bytes: "{\"items\": []}".utf8)
+            client.complete(withStatusCode: 200, data: emptyListJson)
+        }
     }
 
     // MARK: - Helpers
@@ -95,7 +92,7 @@ class RemoteFeedLoaderTests: XCTestCase {
 
     private func expect(
         _ sut: RemoteFeedLoader,
-        toCompleteWithError error: RemoteFeedLoader.Error,
+        toCompleteWith result: RemoteFeedLoader.Result,
         when action: () -> Void,
         file: StaticString = #filePath,
         line: UInt = #line
@@ -108,7 +105,7 @@ class RemoteFeedLoaderTests: XCTestCase {
 
         XCTAssertEqual(
             capturedResult,
-            [.failure(error)],
+            [result],
             file: file,
             line: line
         )
