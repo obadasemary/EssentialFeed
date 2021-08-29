@@ -1,5 +1,4 @@
-# EssentialFeed
-https://iOSLeadEssentials.com
+# EssentialFeed https://iOSLeadEssentials.com
 
 # Essential App Case Study
 
