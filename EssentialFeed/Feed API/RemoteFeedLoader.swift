@@ -83,7 +83,7 @@ private class FeedItemsMapper {
         }
     }
 
-    static var OK_200: Int { return 200 }
+    static var OK_200: Int { 200 }
 
     static func map(_ data: Data, _ response: HTTPURLResponse) throws -> [FeedItem] {
 
