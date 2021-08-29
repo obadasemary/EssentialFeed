@@ -138,6 +138,15 @@ class RemoteFeedLoaderTests: XCTestCase {
             if let value = e.value { acc[e.key] = value }
         }
 
+        // There is an equivalent method to the `.reduce(into:..)` which is the `.compactMapValues`
+        // jsonCompactMapValues
+        _ = [
+            "id": id.uuidString,
+            "description": description,
+            "location": location,
+            "image": imageURL.absoluteString
+        ].compactMapValues { $0 }
+
         return (item, json)
     }
 
