@@ -24,8 +24,7 @@ public final class RemoteFeedLoader {
         case failure(Error)
     }
 
-    public init(url: URL = URL(string: "https://a-url.com")!, client: HTTPClient) {
-
+    public init(url: URL, client: HTTPClient) {
         self.url = url
         self.client = client
     }
@@ -35,12 +34,7 @@ public final class RemoteFeedLoader {
 
             switch result {
             case let .success(data, response):
-                do {
-                    let items = try FeedItemsMapper.map(data, response)
-                    completion(.success(items))
-                } catch {
-                    completion(.failure(.invalidData))
-                }
+                completion(FeedItemsMapper.map(data, from: response))
             case .failure(_):
                 completion(.failure(.connectivity))
             }
