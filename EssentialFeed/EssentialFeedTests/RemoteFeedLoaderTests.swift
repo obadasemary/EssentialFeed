@@ -9,7 +9,7 @@ import XCTest
 @testable import EssentialFeed
 
 final class RemoteFeedLoaderTests: XCTestCase {
-
+    
     func test_init_doesNotRequestDataFromURL() {
         let (_, client) = makeSut()
         
@@ -52,7 +52,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
             expect(sut, toCompleteWith: .failure(.invalidData)) {
                 client.complete(withStatusCode: code, at: index)
             }
-        }   
+        }
     }
     
     func test_load_deliversErrorOn200HTTPResponseWithInvalidJSON() {
@@ -70,6 +70,55 @@ final class RemoteFeedLoaderTests: XCTestCase {
         expect(sut, toCompleteWith: .success([])) {
             let emptyJSONList = Data("{\"items\":[]}".utf8)
             client.complete(withStatusCode: 200, data: emptyJSONList)
+        }
+    }
+    
+    func test_load_deliversItemsOn200HTTPResponseWithValidJSONList() {
+        let (sut, client) = makeSut()
+        
+        let items: [FeedItem] = [
+            .init(
+                id: UUID(),
+                description: nil,
+                location: nil,
+                imageURL: URL(string: "https://example.com")!
+            ),
+            .init(
+                id: UUID(),
+                description: "Good news",
+                location: nil,
+                imageURL: URL(string: "https://example.com")!
+            ),
+            .init(
+                id: UUID(),
+                description: nil,
+                location: "Istanbul",
+                imageURL: URL(string: "https://example.com")!
+            ),
+            .init(
+                id: UUID(),
+                description: "Umrah",
+                location: "Mekkah",
+                imageURL: URL(string: "https://example.com")!
+            )
+        ]
+        
+        let expectedItemJSON = [
+            "items": items.map {
+                [
+                    "id": $0.id.uuidString,
+                    "description": $0.description,
+                    "location": $0.location,
+                    "image": $0.imageURL.absoluteString
+                ].compactMapValues { $0 }
+            }
+        ]
+        
+        expect(sut, toCompleteWith: .success(items)) {
+            let json = try! JSONSerialization.data(
+                withJSONObject: expectedItemJSON
+            )
+            client.complete(withStatusCode: 200, data: json)
         }
     }
     
@@ -124,7 +173,5 @@ final class RemoteFeedLoaderTests: XCTestCase {
             )!
             messages[index].completion(.success(data, response))
         }
-        
-        
     }
 }
