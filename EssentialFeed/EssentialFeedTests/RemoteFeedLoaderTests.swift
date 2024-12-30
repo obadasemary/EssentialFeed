@@ -142,7 +142,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
         _ sut: RemoteFeedLoader,
         toCompleteWith result: RemoteFeedLoader.Result,
         when action: () -> Void,
-        file: StaticString = #file,
+        file: StaticString = #filePath,
         line: UInt = #line
     ) {
         var capturedResults: [RemoteFeedLoader.Result] = []
