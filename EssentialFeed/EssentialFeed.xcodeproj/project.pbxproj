@@ -12,6 +12,7 @@
 		080EDF0E21B6DCB600813479 /* FeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080EDF0D21B6DCB600813479 /* FeedLoader.swift */; };
 		AF41BD352D1D9CE90064D31F /* RemoteFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF41BD332D1D9CE90064D31F /* RemoteFeedLoader.swift */; };
 		AF9074A52D1D7AA70083835F /* RemoteFeedLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9074A42D1D7AA70083835F /* RemoteFeedLoaderTests.swift */; };
+		AFFE11122D2358ED00B44DEB /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFFE11112D2358ED00B44DEB /* HTTPClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +35,7 @@
 		AF41BD332D1D9CE90064D31F /* RemoteFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedLoader.swift; sourceTree = "<group>"; };
 		AF9074A32D1D7AA70083835F /* EssentialFeedTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EssentialFeedTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		AF9074A42D1D7AA70083835F /* RemoteFeedLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedLoaderTests.swift; sourceTree = "<group>"; };
+		AFFE11112D2358ED00B44DEB /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 		AF41BD372D1D9CF90064D31F /* Feed API */ = {
 			isa = PBXGroup;
 			children = (
+				AFFE11112D2358ED00B44DEB /* HTTPClient.swift */,
 				AF41BD332D1D9CE90064D31F /* RemoteFeedLoader.swift */,
 			);
 			path = "Feed API";
@@ -223,6 +226,7 @@
 			files = (
 				AF41BD352D1D9CE90064D31F /* RemoteFeedLoader.swift in Sources */,
 				080EDF0E21B6DCB600813479 /* FeedLoader.swift in Sources */,
+				AFFE11122D2358ED00B44DEB /* HTTPClient.swift in Sources */,
 				080EDF0C21B6DAE800813479 /* FeedItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
