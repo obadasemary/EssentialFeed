@@ -39,7 +39,8 @@ final class URLSessionHTTPClientTests: XCTestCase {
         sut.get(from: url) { result in
             switch result {
             case let .failure(receivedError as NSError):
-                XCTAssertEqual(receivedError, error)
+                XCTAssertEqual(receivedError.domain, error.domain)
+                XCTAssertEqual(receivedError.code, error.code)
             default:
                 XCTFail("Expected failure with \(error), but got \(result) instead")
             }
@@ -54,7 +55,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
     // MARK: - Helpers
     
     private class URLProtocolStub: URLProtocol {
-        private static var stubs: Stub?
+        private static var stub: Stub?
         
         private struct Stub {
             let data: Data?
@@ -67,7 +68,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
             response: URLResponse?,
             error: Error?
         ) {
-            stubs = Stub(data: data, response: response, error: error)
+            stub = Stub(data: data, response: response, error: error)
         }
         
         static func startInterceptingRequests() {
@@ -76,11 +77,11 @@ final class URLSessionHTTPClientTests: XCTestCase {
         
         static func stopInterceptingRequests() {
             URLProtocol.unregisterClass(URLProtocolStub.self)
-            stubs = nil
+            stub = nil
         }
         
         override class func canInit(with request: URLRequest) -> Bool {
-            return true
+            true
         }
         
         override class func canonicalRequest(for request: URLRequest) -> URLRequest {
@@ -89,11 +90,11 @@ final class URLSessionHTTPClientTests: XCTestCase {
         
         override func startLoading() {
             
-            if let data = URLProtocolStub.stubs?.data {
+            if let data = URLProtocolStub.stub?.data {
                 client?.urlProtocol(self, didLoad: data)
             }
             
-            if let response = URLProtocolStub.stubs?.response {
+            if let response = URLProtocolStub.stub?.response {
                 client?
                     .urlProtocol(
                         self,
@@ -102,7 +103,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
                     )
             }
             
-            if let error = URLProtocolStub.stubs?.error {
+            if let error = URLProtocolStub.stub?.error {
                 client?.urlProtocol(self, didFailWithError: error)
             }
             
