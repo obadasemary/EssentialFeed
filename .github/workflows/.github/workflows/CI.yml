@@ -46,18 +46,7 @@ jobs:
             -scheme "CI" \
             -sdk iphonesimulator \
             -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.2' \
-            -only-testing:AIChatTests \
-            test | tee swift_unit_tests.log | xcpretty
-
-      - name: Run UI Tests
-        run: |
-            echo "🧪 Running UI Tests"
-            set -o pipefail && xcodebuild \
-            -scheme "CI" \
-            -sdk iphonesimulator \
-            -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.2' \
-            -only-testing:AIChatUITests \
-            test | tee ui_tests.log | xcpretty
+            test | tee xctest.log | xcpretty
 
       - name: Upload raw logs on failure
         if: failure()
