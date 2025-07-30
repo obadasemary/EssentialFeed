@@ -3,56 +3,28 @@ name: CI-macOS
 # Controls when the action will run. 
 # Triggers the workflow on pull request events but only for the master branch.
 on:
-  push:
-    branches: [ "develop" ]
   pull_request:
-    branches: [ "develop" ]
+    branches: [ develop ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build:
-    runs-on: macos-14
-    timeout-minutes: 15
+  # This workflow contains a single job called "build-and-test"
+  build-and-test:
+    # The type of runner that the job will run on
+    runs-on: macos-15
 
+    timeout-minutes: 8
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Checkout project
-        uses: actions/checkout@v4
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v4
 
-      - name: Select Xcode 16.2
-        run: sudo xcode-select -switch /Applications/Xcode_16.2.app
-
-      - name: Show environment info
-        run: |
-          sw_vers
-          xcodebuild -version
-          xcrun simctl list devices
-
-      - name: List available Xcode schemes (debugging)
-        run: xcodebuild -list
-
-      - name: Build app
-        run: |
-          echo "🚀 Starting xcodebuild"
-          set -o pipefail && xcodebuild \
-            -scheme "CI" \
-            -sdk iphonesimulator \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.1' \
-            build | tee xcodebuild.log | xcpretty
-
-      - name: Run Unit Tests
-        run: |
-            echo "🧪 Running Unit Tests"
-            set -o pipefail && xcodebuild \
-            -scheme "CI" \
-            -sdk iphonesimulator \
-            -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.2' \
-            test | tee xctest.log | xcpretty
-
-      - name: Upload raw logs on failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: xcode-logs
-          path: |
-            xcodebuild.log
-            xctest.log
+    - name: Select Xcode
+      run: sudo xcode-select -switch /Applications/Xcode_16.2.app
+      
+    - name: Xcode version
+      run: /usr/bin/xcodebuild -version
+      
+    - name: Build and Test
+      run: xcodebuild clean build test -project EssentialFeed/EssentialFeed.xcodeproj -scheme "CI" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -sdk macosx -destination "platform=macOS" ONLY_ACTIVE_ARCH=YES
